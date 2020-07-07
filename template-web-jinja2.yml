@@ -1,0 +1,17 @@
+---
+- hosts: clientes
+  remote_user: ansible
+  vars:
+    system_owner: usuario@example.com
+    usuario: Usuario
+  tasks:
+    - template:
+        src: /etc/ansible/templates/index.html.j2
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+    - name: httpd is running and enabled
+      service:
+        name: httpd
+        state: restarted
