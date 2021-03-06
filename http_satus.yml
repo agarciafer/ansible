@@ -1,0 +1,16 @@
+---
+- hosts: cliente11
+  remote_user: root
+  tasks:
+  - name: Checking HTTPd service status
+    service:
+      name: httpd
+      state: started
+    register: httpd_result
+    ignore_errors: true
+  - debug:
+      msg: Previous task failed EL SERVIDOR APACHE DE LA MAQUINA 253 NO INICIA
+    when: httpd_result is failed
+  - debug:
+      msg: Previous task OK EL SERVIDOR APACHE DE LA MAQUINA 253 INICIADO
+    when: httpd_result is changed
